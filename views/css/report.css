@@ -1,0 +1,19 @@
+.analysis-assessment-list{
+	padding:10px;
+	background-color:#F2F8FA;
+	border:1px solid #f0f0f0;
+	height:100px;
+	overflow:auto;
+}
+	.analysis-assessment-list h4{
+		margin:0;
+		padding:0;
+		color:#9b0000;
+	}
+	.analysis-assessment-list .analysis-mapme{
+		font-size:10px;
+		color:#999;
+	}
+		.analysis-assessment-list .analysis-mapme a{
+			color:#999;
+		}
