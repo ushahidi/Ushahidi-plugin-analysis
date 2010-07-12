@@ -114,39 +114,41 @@ class analysis {
 	public function _save_analysis()
 	{
 		$incident = Event::$data;
-		$a_ids = $_POST['a_id'];
-		$analysis = ORM::factory('analysis')
-			->where('incident_id', $incident->id)
-			->find();
-		
-		// Save Analysis
-		$analysis->incident_id = $incident->id;
-		$analysis->user_id = $_SESSION['auth_user']->id;
-		$analysis->analysis_date = date("Y-m-d H:i:s",time());
-		$analysis->save();
-		
-		// Delete Reports associated with this Analysis (if any)
-		ORM::factory('analysis_incident')
-			->where('analysis_id', $analysis->id)
-			->delete_all();
-		
-		// Save Associated Reports
-		foreach ($a_ids as $a_id)
+		if (isset($_POST['a_id']) AND !empty($_POST['a_id']))
 		{
-			$analysis_incident = ORM::factory('analysis_incident');
-			$analysis_incident->analysis_id = $analysis->id;
-			$analysis_incident->incident_id = $a_id;
-			$analysis_incident->save();
-			
-			// Deactivate reports associated with this analysis
-			$deactivated = ORM::factory('incident')->find($a_id);
-			if ($deactivated->loaded)
+			$a_ids = $_POST['a_id'];
+			$analysis = ORM::factory('analysis')
+				->where('incident_id', $incident->id)
+				->find();
+
+			// Save Analysis
+			$analysis->incident_id = $incident->id;
+			$analysis->user_id = $_SESSION['auth_user']->id;
+			$analysis->analysis_date = date("Y-m-d H:i:s",time());
+			$analysis->save();
+
+			// Delete Reports associated with this Analysis (if any)
+			ORM::factory('analysis_incident')
+				->where('analysis_id', $analysis->id)
+				->delete_all();
+
+			// Save Associated Reports
+			foreach ($a_ids as $a_id)
 			{
-				$deactivated->incident_active = 0;
-				$deactivated->save();
+				$analysis_incident = ORM::factory('analysis_incident');
+				$analysis_incident->analysis_id = $analysis->id;
+				$analysis_incident->incident_id = $a_id;
+				$analysis_incident->save();
+
+				// Deactivate reports associated with this analysis
+				$deactivated = ORM::factory('incident')->find($a_id);
+				if ($deactivated->loaded)
+				{
+					$deactivated->incident_active = 0;
+					$deactivated->save();
+				}
 			}
-		}
-		
+		}		
 	}
 	
 	public function _save_analysis_js()
