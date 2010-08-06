@@ -25,36 +25,8 @@ $(document).ready(function() {
 	- Live/Yahoo/OSM/Google
 	- Set Bounds					
 	*/
-	var default_map = <?php echo $default_map; ?>;
-	if (default_map == 2)
-	{
-		map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth", {
-			sphericalMercator: true,
-			maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-			});
-	}
-	else if (default_map == 3)
-	{
-		map_layer = new OpenLayers.Layer.Yahoo("yahoo", {
-			sphericalMercator: true,
-			maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-			});
-	}
-	else if (default_map == 4)
-	{
-		map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap", {
-			sphericalMercator: true,
-			maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-			});
-	}
-	else
-	{
-		map_layer = new OpenLayers.Layer.Google("google", {
-			sphericalMercator: true,
-			maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-			});
-	}
-	map.addLayer(map_layer);
+	<?php echo map::layers_js(FALSE); ?>
+	map.addLayers(<?php echo map::layers_array(FALSE); ?>);
 	
 	map.addControl(new OpenLayers.Control.Navigation());
 	map.addControl(new OpenLayers.Control.PanZoom());
@@ -148,11 +120,12 @@ $(document).ready(function() {
 	// View Report Dialog
 	$("#analysis-report").dialog({
 		autoOpen: false,
-		height: 400,
-		width: 400,
+		height: 550,
+		width: 500,
 		modal: true,
 		resizable: true,
-		draggable: true
+		draggable: true,
+		zIndex: 3999
 	});
 });
 

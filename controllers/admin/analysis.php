@@ -118,7 +118,7 @@ class Analysis_Controller extends Admin_Controller {
 					$filter .= " AND ( c.id = '".$post->analysis_category."' OR c.parent_id = '".$post->analysis_category."' ) ";
 				}
 				
-				$query = $db->query("SELECT DISTINCT i.id, i.incident_title, i.incident_date, l.`latitude`, l.`longitude`, 
+				$query = $db->query("SELECT DISTINCT i.id, i.incident_title, i.incident_date, i.incident_source, i.incident_information, l.`latitude`, l.`longitude`, 
 				((ACOS(SIN($post->latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($post->latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($post->longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE 1=1 $filter HAVING distance<='$radius' ORDER BY i.`incident_date` ASC ");
 				
 				if ($query->count())
@@ -133,7 +133,10 @@ class Analysis_Controller extends Admin_Controller {
 							->find();
 						if ( ! $analysis->loaded)
 						{
-							$html .= "<li><input type=\"checkbox\" name=\"a_id[]\" value=\"".$row->id."\">&nbsp;<a href=\"javascript:showReport(".$row->id.");\">".$row->incident_title."</a><br /><span>".date('M j Y', strtotime($row->incident_date)).", ".date('H:i', strtotime($row->incident_date))."</span></li>";
+							// Source/Information Qualification Information
+							$source_qual = ($row->incident_source) ? $row->incident_source : "-";
+							$info_qual = ($row->incident_information) ? $row->incident_information : "-";
+							$html .= "<li><input type=\"checkbox\" name=\"a_id[]\" value=\"".$row->id."\">&nbsp;<a href=\"javascript:showReport(".$row->id.");\">".$row->incident_title."</a> <span class=\"qual\">[".$source_qual.$info_qual ."]</span><br /><span class=\"date\">".date('M j Y', strtotime($row->incident_date)).", ".date('H:i', strtotime($row->incident_date))."</span></li>";
 							$markers[] = array($row->longitude,$row->latitude);
 						}
 					}
@@ -180,6 +183,11 @@ class Analysis_Controller extends Admin_Controller {
 					$html .= "<li>".$category->category->category_title."</li>";
 				}
 				$html .= "</ul></div>";
+				$html .= "<div class=\"analysis-window-cats\" >QUALIFICATION:</div>";
+				$grid = new View('analysis/grid');
+				$grid->source_qual = $incident->incident_source;
+				$grid->info_qual = $incident->incident_information;
+				$html .= $grid;
 				echo $html;
 			}
 			else

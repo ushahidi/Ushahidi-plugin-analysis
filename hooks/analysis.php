@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Facebook Social Hook - Load All Events
+ * Analysis Hook - Load All Events
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
