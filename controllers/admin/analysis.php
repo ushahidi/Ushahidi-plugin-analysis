@@ -136,7 +136,9 @@ class Analysis_Controller extends Admin_Controller {
 							// Source/Information Qualification Information
 							$source_qual = ($row->incident_source) ? $row->incident_source : "-";
 							$info_qual = ($row->incident_information) ? $row->incident_information : "-";
-							$html .= "<li><input type=\"checkbox\" name=\"a_id[]\" value=\"".$row->id."\">&nbsp;<a href=\"javascript:showReport(".$row->id.");\">".$row->incident_title."</a> <span class=\"qual\">[".$source_qual.$info_qual ."]</span><br /><span class=\"date\">".date('M j Y', strtotime($row->incident_date)).", ".date('H:i', strtotime($row->incident_date))."</span></li>";
+							$qualification = $this->_qualification($source_qual, $info_qual);
+							
+							$html .= "<li><input type=\"checkbox\" name=\"a_id[]\" value=\"".$row->id."\">&nbsp;<a href=\"javascript:showReport(".$row->id.");\">".$row->incident_title."</a> <span class=\"qual\">".$qualification."</span><br /><span class=\"date\">".date('M j Y', strtotime($row->incident_date)).", ".date('H:i', strtotime($row->incident_date))."</span></li>";
 							$markers[] = array($row->longitude,$row->latitude);
 						}
 					}
@@ -173,6 +175,10 @@ class Analysis_Controller extends Admin_Controller {
 			$incident = ORM::factory('incident', $id);
 			if ($incident->loaded)
 			{
+				$source_qual = ($incident->incident_source) ? $incident->incident_source : "-";
+				$info_qual = ($incident->incident_information) ? $incident->incident_information : "-";
+				$qualification = $this->_qualification($source_qual, $info_qual);
+				
 				$html = "";
 				$html .= "<h4 class=\"analysis-window-title\" >".$incident->incident_title."</h4>";
 				$html .= "<div class=\"analysis-window-date\" >DATE: ".date('M j Y', strtotime($incident->incident_date))." TIME: ".date('H:i', strtotime($incident->incident_date))."</div>";
@@ -183,7 +189,7 @@ class Analysis_Controller extends Admin_Controller {
 					$html .= "<li>".$category->category->category_title."</li>";
 				}
 				$html .= "</ul></div>";
-				$html .= "<div class=\"analysis-window-cats\" >QUALIFICATION:</div>";
+				$html .= "<div class=\"analysis-window-cats\" >QUALIFICATION: <span class=\"qual\">".$qualification."</span></div>";
 				$grid = new View('analysis/grid');
 				$grid->source_qual = $incident->incident_source;
 				$grid->info_qual = $incident->incident_information;
@@ -223,4 +229,24 @@ class Analysis_Controller extends Admin_Controller {
 				});
 			</script>";	
     }
+
+	private function _qualification($source_qual = 0, $info_qual = 0)
+	{
+		$sourcequal_array = array();
+		$sourcequal_array[1] = "A";
+		$sourcequal_array[2] = "B";
+		$sourcequal_array[3] = "C";
+		$sourcequal_array[4] = "D";
+		$sourcequal_array[5] = "E";
+		$sourcequal_array[6] = "F";
+		
+		if ($source_qual >= 1 AND $source_qual <= 6
+			AND $info_qual >= 1 AND $info_qual <= 6) {
+			return strtoupper($sourcequal_array[$source_qual].$info_qual);
+		}
+		else
+		{
+			return "--";
+		}
+	}
 }

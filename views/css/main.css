@@ -118,10 +118,12 @@
 					font-style:italic;
 					color:#666;
 				}
-				.analysis-generated ul li span.qual{
+				span.qual{
 					font-size:0.9em;
-					font-style:italic;
-					color:#666;
+					padding:2px 4px 2px 4px;
+					margin-left:5px;
+					background-color:#ccc;
+					color:#000;
 				}
 		.analysis-highlight{
 			background-color:#ffffcc;

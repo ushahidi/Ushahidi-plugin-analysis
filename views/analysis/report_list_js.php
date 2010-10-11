@@ -11,4 +11,10 @@ function analysisMapme(lon, lat) {
 	$("#latitude").attr("value", lat);
 	$("#longitude").attr("value", lon);
 }
+$(document).ready(function() {
+	$('a#analysis_toggle').click(function() {
+		$('#analysis_report_details').toggle(400);
+		return false;
+	});
+});
 </script>
