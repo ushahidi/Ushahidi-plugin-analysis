@@ -54,7 +54,41 @@ class analysis {
 			Event::add('ushahidi_action.header_scripts_admin', array($this, '_save_analysis_js'));
 			Event::add('ushahidi_action.report_edit', array($this, '_save_analysis'));
 		}
+		elseif (strripos(Router::$current_uri, "reports/submit") !== false)
+		{
+			//Add dropdown fields to the submit form
+			Event::add('ushahidi_action.report_form', array($this, '_submit_form'));
+
+			//Save the contents of the dropdown
+			Event::add('ushahidi_action.report_add', array($this, '_save_submit_form'));
+			
+		}
 	}
+
+
+	public function _submit_form()
+	{	
+		//Load the view
+		$form = View::factory('analysis/reports_submit_form');		
+
+		$form->render(TRUE);
+	}
+
+	public function _save_submit_form()
+	{
+		$post = Event::$data;
+		
+		// Save Analysis Information
+		$analysis = new Analysis_Model();
+		$analysis->incident_id = $post->id;
+		$analysis->incident_source = $post->incident_source;
+		$analysis->incident_information = $post->incident_information;
+		$analysis->analysis_date = date("Y-m-d H:i:s",time());
+		$analysis->save();
+		//print_r($post);exit;
+			
+	}
+
 	
 	public function _report_link()
 	{
@@ -67,12 +101,12 @@ class analysis {
 		$incident = Event::$data;
 		// Is this report an Assessment?
 		$analysis = ORM::factory('analysis')
-			->where('incident_id', $incident->id)
+			->where('incident_id', $incident->incident_id)
 			->find();
 		if ($analysis->loaded)
 		{
 			$button = View::factory('analysis/buttons');
-			$button->incident_id = $incident->id;
+			$button->incident_id = $incident->incident_id;
 			$button->render(TRUE);
 		}
 	}
@@ -122,7 +156,8 @@ class analysis {
 				->where('incident_id', $incident->id)
 				->find();
 
-			// Save Analysis
+
+            // Save Analysis
 			$analysis->incident_id = $incident->id;
 			$analysis->user_id = $_SESSION['auth_user']->id;
 			$analysis->analysis_date = date("Y-m-d H:i:s",time());

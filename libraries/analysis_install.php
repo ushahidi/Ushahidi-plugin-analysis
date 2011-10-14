@@ -29,6 +29,8 @@ class Analysis_Install {
 			(
 				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 				`incident_id` INT NOT NULL COMMENT 'incident_id of the new report that is created',
+				`incident_source` INT NOT NULL COMMENT 'incident_source of the new report that is created',
+				`incident_information` INT NOT NULL COMMENT 'incident_information of the new report that is created',
 				`user_id` INT NOT NULL COMMENT 'user_id of the user that performed this assessment',
 				`analysis_date` DATETIME NOT NULL,
 				PRIMARY KEY (id)
