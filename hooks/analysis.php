@@ -18,9 +18,11 @@ class analysis {
 	 * Registers the main event add method
 	 */
 	public function __construct()
-	{	
+	{
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
+		// Initialize this for later
+		$this->post_data = null;
 	}
 	
 	/**
@@ -60,33 +62,40 @@ class analysis {
 			Event::add('ushahidi_action.report_form', array($this, '_submit_form'));
 
 			//Save the contents of the dropdown
+			Event::add('ushahidi_action.report_submit', array($this, '_handle_post_data'));
 			Event::add('ushahidi_action.report_add', array($this, '_save_submit_form'));
 			
 		}
 	}
 
-
 	public function _submit_form()
 	{	
 		//Load the view
-		$form = View::factory('analysis/reports_submit_form');		
+		$form = View::factory('analysis/reports_submit_form');
 
 		$form->render(TRUE);
+	}
+	
+	public function _handle_post_data() {
+		$this->post_data = Event::$data;
+		// We should probably add validation here too.
 	}
 
 	public function _save_submit_form()
 	{
-		$post = Event::$data;
+		$incident = Event::$data;
+		$post = $this->post_data;
 		
-		// Save Analysis Information
-		$analysis = new Analysis_Model();
-		$analysis->incident_id = $post->id;
-		$analysis->incident_source = $post->incident_source;
-		$analysis->incident_information = $post->incident_information;
-		$analysis->analysis_date = date("Y-m-d H:i:s",time());
-		$analysis->save();
+		if ($post) {
+			// Save Analysis Information
+			$analysis = new Analysis_Model();
+			$analysis->incident_id = $incident->id;
+			$analysis->incident_source = $post->incident_source;
+			$analysis->incident_information = $post->incident_information;
+			$analysis->analysis_date = date("Y-m-d H:i:s",time());
+			$analysis->save();
+		}
 		//print_r($post);exit;
-			
 	}
 
 	
