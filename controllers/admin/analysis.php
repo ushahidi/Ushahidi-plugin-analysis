@@ -182,8 +182,9 @@ class Analysis_Controller extends Admin_Controller {
 			$incident = ORM::factory('incident', $id);
 			if ($incident->loaded)
 			{
-				$source_qual = ($incident->incident_source) ? $incident->incident_source : "-";
-				$info_qual = ($incident->incident_information) ? $incident->incident_information : "-";
+				$incident_quality = ORM::factory('incident_quality')->where('incident_id', $id)->find();
+				$source_qual = ($incident_quality->incident_source) ? $incident_quality->incident_source : "-";
+				$info_qual = ($incident_quality->incident_information) ? $incident_quality->incident_information : "-";
 				$qualification = $this->_qualification($source_qual, $info_qual);
 				
 				$html = "";
@@ -198,8 +199,8 @@ class Analysis_Controller extends Admin_Controller {
 				$html .= "</ul></div>";
 				$html .= "<div class=\"analysis-window-cats\" >QUALIFICATION: <span class=\"qual\">".$qualification."</span></div>";
 				$grid = new View('analysis/grid');
-				$grid->source_qual = $incident->incident_source;
-				$grid->info_qual = $incident->incident_information;
+				$grid->source_qual = $incident_quality->incident_source;
+				$grid->info_qual = $incident_quality->incident_information;
 				$html .= $grid;
 				echo $html;
 			}
