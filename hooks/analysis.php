@@ -87,13 +87,12 @@ class analysis {
 		$post = $this->post_data;
 		
 		if ($post) {
-			// Save Analysis Information
-			$analysis = new Analysis_Model();
-			$analysis->incident_id = $incident->id;
-			$analysis->incident_source = $post->incident_source;
-			$analysis->incident_information = $post->incident_information;
-			$analysis->analysis_date = date("Y-m-d H:i:s",time());
-			$analysis->save();
+			// Save Quality Information
+			$quality = new Incident_Quality_Model();
+			$quality->incident_id = $incident->id;
+			$quality->incident_source = $post->incident_source;
+			$quality->incident_information = $post->incident_information;
+			$quality->save();
 		}
 		//print_r($post);exit;
 	}

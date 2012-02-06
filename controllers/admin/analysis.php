@@ -118,9 +118,15 @@ class Analysis_Controller extends Admin_Controller {
 					$filter .= " AND ( c.id = '".$post->analysis_category."' OR c.parent_id = '".$post->analysis_category."' ) ";
 				}
 				
-				$query = $db->query("SELECT DISTINCT i.id, i.incident_title, i.incident_date, i.incident_source, i.incident_information, l.`latitude`, l.`longitude`, 
-				((ACOS(SIN($post->latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($post->latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($post->longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE 1=1 $filter HAVING distance<='$radius' ORDER BY i.`incident_date` ASC ");
+				// update here for seperate table
+				// Note: * 1.1515 is for conversion from nautical miles to statute miles
+				// (One nautical mile is the length of one minute of latitude at the equator)
+				$query = $db->query("SELECT DISTINCT i.id, i.incident_title, i.incident_date, iq.incident_source, iq.incident_information, l.`latitude`, l.`longitude`, 
+				((ACOS(SIN($post->latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($post->latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($post->longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance
+				FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) INNER JOIN `".$this->table_prefix."incident_quality` AS iq ON (i.`id` = iq.`incident_id`)
+				WHERE 1=1 $filter HAVING distance<='$radius' ORDER BY i.`incident_date` ASC ");
 				
+				$markers = array();
 				if ($query->count())
 				{
 					$html = "<h4>Found ".$query->count()." Results</h4>";
@@ -131,6 +137,7 @@ class Analysis_Controller extends Admin_Controller {
 						$analysis = ORM::factory('analysis')
 							->where('incident_id', $row->id)
 							->find();
+						
 						if ( ! $analysis->loaded)
 						{
 							// Source/Information Qualification Information

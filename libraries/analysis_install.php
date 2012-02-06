@@ -29,8 +29,6 @@ class Analysis_Install {
 			(
 				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 				`incident_id` INT NOT NULL COMMENT 'incident_id of the new report that is created',
-				`incident_source` INT NOT NULL COMMENT 'incident_source of the new report that is created',
-				`incident_information` INT NOT NULL COMMENT 'incident_information of the new report that is created',
 				`user_id` INT NOT NULL COMMENT 'user_id of the user that performed this assessment',
 				`analysis_date` DATETIME NOT NULL,
 				PRIMARY KEY (id)
@@ -43,7 +41,17 @@ class Analysis_Install {
 				`analysis_id` INT NOT NULL,
 				`incident_id` INT NOT NULL COMMENT 'incident_id\'s of the child reports that belong to this analysis',
 				PRIMARY KEY (id)
-			);");	
+			);");
+      
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS `".Kohana::config('database.default.table_prefix')."incident_quality`
+			(
+				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+				`incident_id` INT NOT NULL COMMENT 'incident_id of the new report that is created',
+				`incident_source` INT NOT NULL COMMENT 'incident_source of the new report that is created',
+				`incident_information` INT NOT NULL COMMENT 'incident_information of the new report that is created',
+				PRIMARY KEY (id)
+			);");
 	}
 
 	/**
@@ -54,6 +62,7 @@ class Analysis_Install {
 		$this->db->query("
 			DROP TABLE ".Kohana::config('database.default.table_prefix')."analysis;
 			DROP TABLE ".Kohana::config('database.default.table_prefix')."analysis_incident;
+			DROP TABLE ".Kohana::config('database.default.table_prefix')."incident_quality;
 			");
 	}
 }
