@@ -165,8 +165,7 @@ class analysis {
 				->where('incident_id', $incident->id)
 				->find();
 
-
-            // Save Analysis
+			// Save Analysis
 			$analysis->incident_id = $incident->id;
 			$analysis->user_id = $_SESSION['auth_user']->id;
 			$analysis->analysis_date = date("Y-m-d H:i:s",time());

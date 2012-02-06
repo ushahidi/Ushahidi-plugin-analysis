@@ -2,10 +2,10 @@
 /**
  * Performs install/uninstall methods for the Analysis Plugin
  *
- * @package    Ushahidi
- * @author     Ushahidi Team
- * @copyright  (c) 2008 Ushahidi Team
- * @license    http://www.ushahidi.com/license.html
+ * @package		Ushahidi
+ * @author		 Ushahidi Team
+ * @copyright	(c) 2008 Ushahidi Team
+ * @license		http://www.ushahidi.com/license.html
  */
 class Analysis_Install {
 
@@ -14,7 +14,7 @@ class Analysis_Install {
 	 */
 	public function __construct()
 	{
-		$this->db =  new Database();
+		$this->db =	new Database();
 	}
 
 	/**

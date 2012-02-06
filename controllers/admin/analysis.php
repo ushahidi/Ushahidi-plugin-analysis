@@ -6,18 +6,18 @@
  * LICENSE: This source file is subject to LGPL license 
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
- * @package    Ushahidi - http://source.ushahididev.com
- * @module	   Analysis Controller	
- * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @author		 Ushahidi Team <team@ushahidi.com> 
+ * @package		Ushahidi - http://source.ushahididev.com
+ * @module		 Analysis Controller	
+ * @copyright	Ushahidi - http://www.ushahidi.com
+ * @license		http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 * 
 */
 
 class Analysis_Controller extends Admin_Controller {
 	
 	public function __construct()
-    {
+		{
 		parent::__construct();
 		$this->template->this_page = 'reports';
 	}
@@ -27,14 +27,14 @@ class Analysis_Controller extends Admin_Controller {
 		$this->template->content = new View('analysis/main');
 		
 		// Get all active top level categories
-        $parent_categories = array();
-        foreach (ORM::factory('category')
+				$parent_categories = array();
+				foreach (ORM::factory('category')
 				->where('category_visible', '1')
 				->where('parent_id', '0')
 				->orderby('category_title', 'ASC')
 				->find_all() as $category)
-        {
-            // Get The Children
+				{
+						// Get The Children
 			$children = array();
 			foreach ($category->children as $child)
 			{
@@ -44,12 +44,12 @@ class Analysis_Controller extends Admin_Controller {
 			sort($children);
 			
 			// Put it all together
-            $parent_categories[$category->id] = array(
+						$parent_categories[$category->id] = array(
 				$category->category_title,
 				$children
 			);
-        }
-        $this->template->content->categories = $parent_categories;
+				}
+				$this->template->content->categories = $parent_categories;
 
 		$this->template->content->date_picker_js = $this->_date_picker_js();
 		$this->template->content->latitude = Kohana::config('settings.default_lat');
@@ -72,16 +72,16 @@ class Analysis_Controller extends Admin_Controller {
 		$this->auto_render = FALSE;	
 		
 		// check, has the form been submitted, if so, setup validation
-	    if ($_POST)
-	    {
+			if ($_POST)
+			{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST
-            // fields with our own things
-            $post = new Validation($_POST);
+			// fields with our own things
+			$post = new Validation($_POST);
 
-	        // Add some filters
-	        $post->pre_filter('trim', TRUE);
+			// Add some filters
+			$post->pre_filter('trim', TRUE);
 
-	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			// Add some rules, the input field, followed by a list of checks, carried out in order
 			$post->add_rules('latitude', 'required', 'between[-90,90]');
 			$post->add_rules('longitude', 'required', 'between[-180,180]');
 			$post->add_rules('analysis_radius', 'required', 'numeric');
@@ -90,15 +90,15 @@ class Analysis_Controller extends Admin_Controller {
 			$post->add_rules('analysis_category', 'numeric');
 			
 			// Test to see if things passed the rule checks
-	        if ($post->validate())
-	        {
+					if ($post->validate())
+					{
 				// Database
 				$db = new Database();
 				
 				$filter = "";
 				
 				// Radius Filter
-				$radius = $post->analysis_radius / 1.609344; // Conversion 
+				$radius = $post->analysis_radius / 1.609344; // Conversion KM -> Miles
 				
 				// Time Filter
 				$start_date = strtotime($post->start_date);
@@ -208,8 +208,8 @@ class Analysis_Controller extends Admin_Controller {
 	}
 	
 	private function _date_picker_js() 
-    {
-        return "<script type=\"text/javascript\">
+		{
+				return "<script type=\"text/javascript\">
 				$(document).ready(function() {
 					$(\"#start_date\").datepicker({ 
 						showOn: \"both\", 
@@ -228,7 +228,7 @@ class Analysis_Controller extends Admin_Controller {
 					});
 				});
 			</script>";	
-    }
+		}
 
 	private function _qualification($source_qual = 0, $info_qual = 0)
 	{
