@@ -41,6 +41,13 @@ class analysis {
 			// Add Buttons to the report List
 			Event::add('ushahidi_action.report_extra_admin', array($this, '_reports_list_buttons'));
 		}
+		elseif (Router::$current_uri == "reports")
+		{
+			plugin::add_stylesheet('analysis/views/css/buttons');
+			
+			// Add Buttons to the report List
+			Event::add('ushahidi_action.report_extra_media', array($this, '_reports_list_buttons'));
+		}
 		elseif (Router::$controller == 'analysis')
 		{
 			plugin::add_javascript('analysis/views/js/ui.dialog');
@@ -64,7 +71,12 @@ class analysis {
 			//Save the contents of the dropdown
 			Event::add('ushahidi_action.report_submit', array($this, '_handle_post_data'));
 			Event::add('ushahidi_action.report_add', array($this, '_save_submit_form'));
+		}
+		elseif (strripos(Router::$current_uri, "reports/view") !== false)
+		{
+			plugin::add_stylesheet('analysis/views/css/buttons');
 			
+			Event::add('ushahidi_action.report_meta_after_time', array($this, '_reports_list_buttons'));
 		}
 	}
 
@@ -107,14 +119,21 @@ class analysis {
 	public function _reports_list_buttons()
 	{		
 		$incident = Event::$data;
+		if (is_object($incident))
+		{
+			$incident_id = $incident->incident_id;
+		} else {
+			$incident_id = (int)$incident;
+		}
+		
 		// Is this report an Assessment?
 		$analysis = ORM::factory('analysis')
-			->where('incident_id', $incident->incident_id)
+			->where('incident_id', $incident_id)
 			->find();
 		if ($analysis->loaded)
 		{
 			$button = View::factory('analysis/buttons');
-			$button->incident_id = $incident->incident_id;
+			$button->incident_id = $incident_id;
 			$button->render(TRUE);
 		}
 	}
