@@ -196,7 +196,9 @@ class analysis {
 	
 	public function _save_analysis_js()
 	{
-		View::factory('analysis/report_list_js')->render(TRUE);
+		$this->template->js = View::factory('analysis/report_list_js');
+		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->template->js->render(TRUE);
 	}
 }
 

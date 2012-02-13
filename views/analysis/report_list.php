@@ -9,7 +9,7 @@
 		if ($analysis_incident->loaded)
 		{
 			echo "<li>";
-			echo "<a href=\"".url::site()."admin/reports/edit/".$a_id."\" target=\"_blank\">".$analysis_incident->incident_title."</a> <span class=\"analysis-mapme\">[<a href=\"javascript:analysisMapme('".$analysis_incident->location->longitude."','".$analysis_incident->location->latitude."')\">map</a>]</span>";
+			echo "<a href=\"".url::site()."admin/reports/edit/".$a_id."\" target=\"_blank\">".$analysis_incident->incident_title."</a> <span class=\"analysis-mapme\">[<a href=\"javascript:analysisMapme('".$analysis_incident->location->longitude."','".$analysis_incident->location->latitude."')\">add to map</a>]</span>";
 			echo "<input type=\"hidden\" name=\"a_id[]\" value=\"".$analysis_incident->id."\">";
 			echo "</li>";
 			
