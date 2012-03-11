@@ -52,6 +52,10 @@ class Analysis_Install {
 				`incident_information` INT NOT NULL COMMENT 'incident_information of the new report that is created',
 				PRIMARY KEY (id)
 			);");
+		$this->db->query("
+			INSERT INTO `".Kohana::config('database.default.table_prefix')."category` (id, locale, category_type, category_position, category_title, category_description, category_color, category_visible, category_trusted)
+			VALUES (1999, 'en_US', 5, 6, 'Analysis', 'Reports created from analysis of multiple reports', '92c400', 1, 0);
+			");
 	}
 
 	/**

@@ -6,10 +6,10 @@
  * LICENSE: This source file is subject to LGPL license 
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
- * @package	   Ushahidi - http://source.ushahididev.com
- * @copyright  Ushahidi - http://www.ushahidi.com
- * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @author		 Ushahidi Team <team@ushahidi.com> 
+ * @package		 Ushahidi - http://source.ushahididev.com
+ * @copyright	Ushahidi - http://www.ushahidi.com
+ * @license		 http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
 class analysis {
@@ -34,27 +34,29 @@ class analysis {
 		Event::add('ushahidi_action.nav_admin_reports', array($this, '_report_link'));
 		
 		// Only add the events if we are on that controller
-		if (Router::$current_uri == "admin/reports")
-		{
-			plugin::add_stylesheet('analysis/views/css/buttons');
-			
-			// Add Buttons to the report List
-			Event::add('ushahidi_action.report_extra_admin', array($this, '_reports_list_buttons'));
+		switch (Router::$current_uri) {
+			case "admin/reports":
+				plugin::add_stylesheet('analysis/views/css/buttons');
+				
+				// Add Buttons to the report List
+				Event::add('ushahidi_action.report_extra_admin', array($this, '_reports_list_buttons_admin'));
+			break;
+			case "reports":
+				plugin::add_stylesheet('analysis/views/css/buttons');
+				
+				// Add Buttons to the report List
+				Event::add('ushahidi_action.report_extra_media', array($this, '_reports_list_buttons'));
+			break;
 		}
-		elseif (Router::$current_uri == "reports")
-		{
-			plugin::add_stylesheet('analysis/views/css/buttons');
-			
-			// Add Buttons to the report List
-			Event::add('ushahidi_action.report_extra_media', array($this, '_reports_list_buttons'));
-		}
-		elseif (Router::$controller == 'analysis')
+		
+		if (Router::$controller == 'analysis')
 		{
 			plugin::add_javascript('analysis/views/js/ui.dialog');
 			plugin::add_javascript('analysis/views/js/ui.draggable');
 			plugin::add_javascript('analysis/views/js/ui.resizable');
 			plugin::add_stylesheet('analysis/views/css/main');
 		}
+		// CLEAN UP THIS CODE
 		elseif (strripos(Router::$current_uri, "admin/reports/edit") !== false)
 		{
 			plugin::add_stylesheet('analysis/views/css/report');
@@ -76,7 +78,7 @@ class analysis {
 		{
 			plugin::add_stylesheet('analysis/views/css/buttons');
 			
-			Event::add('ushahidi_action.report_meta_after_time', array($this, '_reports_list_buttons'));
+			Event::add('ushahidi_action.report_meta_after_time', array($this, '_reports_view_buttons'));
 		}
 	}
 
@@ -116,8 +118,8 @@ class analysis {
 		echo ($this_sub_page == "analysis") ? "Analysis" : "<a href=\"".url::site()."admin/analysis\">Analysis</a>";
 	}
 	
-	public function _reports_list_buttons()
-	{		
+	public function _reports_buttons()
+	{
 		$incident = Event::$data;
 		if (is_object($incident))
 		{
@@ -134,6 +136,34 @@ class analysis {
 		{
 			$button = View::factory('analysis/buttons');
 			$button->incident_id = $incident_id;
+			$button->link = '';
+			return $button;
+		}
+	}
+	
+	public function _reports_list_buttons_admin()
+	{
+		if ($button = $this->_reports_buttons() )
+		{
+			$button->link = url::base().'admin/reports/view/'.$button->incident_id;
+			$button->render(TRUE);
+		}
+	}
+	
+	public function _reports_list_buttons()
+	{
+		if ($button = $this->_reports_buttons() )
+		{
+			$button->link = url::base().'reports/view/'.$button->incident_id;
+			$button->render(TRUE);
+		}
+	}
+	
+	public function _reports_view_buttons()
+	{
+		if ($button = $this->_reports_buttons() )
+		{
+			$button->link = '#';
 			$button->render(TRUE);
 		}
 	}
@@ -210,7 +240,19 @@ class analysis {
 					$deactivated->save();
 				}
 			}
-		}		
+
+			// Add to 'Analysis' category
+			$incident_category = ORM::factory('incident_category')
+				->where(array('incident_id' => $incident->id, 'category_id' => 1999))
+				->find();
+			if (!$incident_category->loaded)
+			{
+				$incident_category = new Incident_Category_Model();
+				$incident_category->incident_id = $incident->id;
+				$incident_category->category_id = 1999;
+				$incident_category->save();
+			}
+		}
 	}
 	
 	public function _save_analysis_js()
