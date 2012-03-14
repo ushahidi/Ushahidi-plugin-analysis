@@ -13,6 +13,7 @@ Analyse incoming reports to find related items by proximity, time, category etc.
 
 == Installation ==
 1. Copy the entire /analysis/ directory into your /plugins/ directory.
+   (Note: the directory MUST be named analysis, not Ushahidi-plugin-analysis)
 2. Activate the plugin.
 3. Go to Admin, Click on Reports Tab - you should see Analysis Menu Option at Top Right
 
