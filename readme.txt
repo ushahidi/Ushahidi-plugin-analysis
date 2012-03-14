@@ -1,5 +1,5 @@
 === About ===
-name: Analysis
+name: Analysis Matrix
 website: http://www.ushahidi.com
 description: Analyse incoming reports to find related items by proximity, time, category etc. Developed with the help of ICT4Peace.
 version: 0.5
