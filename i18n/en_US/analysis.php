@@ -1,0 +1,20 @@
+<?php
+	$lang = array(
+	'information_evaluation' => 'Information Evaluation',
+	'report_edit_dropdown_1_default' => '--- Select One ---',
+	'report_edit_dropdown_1_item_1' => 'Yes, the source has direct access to information (witness or actor).',
+	'report_edit_dropdown_1_item_2' => 'Yes, the source has access to information, but can be wrong.',
+	'report_edit_dropdown_1_item_3' => 'Yes, the source has no direct access to information, but is often right.',
+	'report_edit_dropdown_1_item_4' => 'Not always, but is often right.',
+	'report_edit_dropdown_1_item_5' => 'No, the source has (had) no access to information.',
+	'report_edit_dropdown_1_item_6' => 'I do not know.',
+	'report_edit_dropdown_1_title' => 'Source Reliability',
+	'report_edit_dropdown_2_default' => '--- Select One ---',
+	'report_edit_dropdown_2_item_1' => 'Yes, the information is confirmed by several independent sources.',
+	'report_edit_dropdown_2_item_2' => 'Yes, the information is not confirmed (yet), but is likely.',
+	'report_edit_dropdown_2_item_3' => 'Yes, the information makes sense.',
+	'report_edit_dropdown_2_item_4' => 'No, the information is surprising.',
+	'report_edit_dropdown_2_item_5' => 'No, the information is unlikely and may be disinformation.',
+	'report_edit_dropdown_2_item_6' => 'I do not know.',
+	'report_edit_dropdown_2_title' => 'Information Probability',
+);
