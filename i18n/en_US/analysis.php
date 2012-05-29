@@ -1,5 +1,6 @@
 <?php
 	$lang = array(
+	'analysis' => 'Analysis',
 	'information_evaluation' => 'Information Evaluation',
 	'report_edit_dropdown_1_default' => '--- Select One ---',
 	'report_edit_dropdown_1_item_1' => 'Yes, the source has direct access to information (witness or actor).',

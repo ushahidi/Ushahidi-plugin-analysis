@@ -115,7 +115,7 @@ class analysis {
 	public function _report_link()
 	{
 		$this_sub_page = Event::$data;
-		echo ($this_sub_page == "analysis") ? "Analysis" : "<a href=\"".url::site()."admin/analysis\">Analysis</a>";
+		echo ($this_sub_page == "analysis") ? Kohana::lang('analysis.analysis') : "<a href=\"".url::site()."admin/analysis\">".Kohana::lang('analysis.analysis')."</a>";
 	}
 	
 	public function _reports_buttons()
