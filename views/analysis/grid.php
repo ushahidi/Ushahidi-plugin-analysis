@@ -25,7 +25,7 @@ for ($i=1; $i < 7; $i++)
 {
 	if ($source_qual >= 1 AND $source_qual <= 6
 		AND $info_qual >= 1 AND $info_qual <= 6) {
-		$incident_qual = strtoupper($sourcequal_array[$source_qual].$info_qual);
+		$incident_qual = utf8::strtoupper($sourcequal_array[$source_qual].$info_qual);
 	}
 	else
 	{
@@ -35,7 +35,7 @@ for ($i=1; $i < 7; $i++)
 	<div class="grid-row">
 		<div class="left1" style="background-color:<?php echo $row_colors[$i][0]; ?>;">
 			<div <?php
-				$this_box = strtoupper($sourcequal_array[$i]."1");
+				$this_box = utf8::strtoupper($sourcequal_array[$i]."1");
 				if ($incident_qual == $this_box)
 				{
 					echo " class=\"selected\"";
@@ -44,7 +44,7 @@ for ($i=1; $i < 7; $i++)
 		</div>
 		<div class="left2" style="background-color:<?php echo $row_colors[$i][1]; ?>;">
 			<div <?php
-				$this_box = strtoupper($sourcequal_array[$i]."2");
+				$this_box = utf8::strtoupper($sourcequal_array[$i]."2");
 				if ($incident_qual == $this_box)
 				{
 					echo " class=\"selected\"";
@@ -53,7 +53,7 @@ for ($i=1; $i < 7; $i++)
 		</div>
 		<div class="left3" style="background-color:<?php echo $row_colors[$i][2]; ?>;">
 			<div <?php
-				$this_box = strtoupper($sourcequal_array[$i]."3");
+				$this_box = utf8::strtoupper($sourcequal_array[$i]."3");
 				if ($incident_qual == $this_box)
 				{
 					echo " class=\"selected\"";
@@ -62,7 +62,7 @@ for ($i=1; $i < 7; $i++)
 		</div>
 		<div class="left4" style="background-color:<?php echo $row_colors[$i][3]; ?>;">
 			<div <?php
-				$this_box = strtoupper($sourcequal_array[$i]."4");
+				$this_box = utf8::strtoupper($sourcequal_array[$i]."4");
 				if ($incident_qual == $this_box)
 				{
 					echo " class=\"selected\"";
@@ -71,7 +71,7 @@ for ($i=1; $i < 7; $i++)
 		</div>
 		<div class="left5" style="background-color:<?php echo $row_colors[$i][4]; ?>;">
 			<div <?php
-				$this_box = strtoupper($sourcequal_array[$i]."5");
+				$this_box = utf8::strtoupper($sourcequal_array[$i]."5");
 				if ($incident_qual == $this_box)
 				{
 					echo " class=\"selected\"";
@@ -80,7 +80,7 @@ for ($i=1; $i < 7; $i++)
 		</div>
 		<div class="right" style="background-color:<?php echo $row_colors[$i][5]; ?>;">
 			<div <?php
-				$this_box = strtoupper($sourcequal_array[$i]."6");
+				$this_box = utf8::strtoupper($sourcequal_array[$i]."6");
 				if ($incident_qual == $this_box)
 				{
 					echo " class=\"selected\"";

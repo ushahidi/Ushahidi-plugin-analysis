@@ -5,7 +5,7 @@
 	
 	<div class="report-form">		
 		<div class="head">
-			<h3>Analysis</h3>
+			<h3><?php echo Kohana::lang('analysis.analysis') ?></h3>
 		</div>
 		<!-- column -->
 		
@@ -16,19 +16,19 @@
 			<div class="analysis-report">
 				<form>
 					<div class="analysis-about">
-						<h4>How Analysis Works</h4>
+						<h4><?php echo Kohana::lang('analysis.how_analysis_works'); ?></h4>
 						<ul>
-							<li>This tool helps you find related reports in the system based on specified parameters.</li>
-							<li>To the right, select the filters you'd like to apply to the reports you're looking for.</li>
-							<li>Select the reports you'd like to analyse and click 'Perform Assessment'</li>
+							<li><?php echo Kohana::lang('analysis.how_analysis_works_1'); ?></li>
+							<li><?php echo Kohana::lang('analysis.how_analysis_works_2'); ?></li>
+							<li><?php echo Kohana::lang('analysis.how_analysis_works_3'); ?></li>
 						</ul>
-						<a href="javascript:hideAbout();">Hide</a>
+						<a href="javascript:hideAbout();"><?php echo Kohana::lang('ui_main.hide'); ?></a>
 					</div>
 					
 					<a name="results"></a>
-					<div class="analysis-results">Search Results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:checkAll('a_id[]')">Select ALL</a>&nbsp;|&nbsp;<a href="javascript:checkNone('a_id[]')">Select NONE</a></div>
+					<div class="analysis-results"><?php echo Kohana::lang('ui_main.search_results'); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:checkAll('a_id[]')"><?php echo Kohana::lang('analysis.select_all'); ?></a>&nbsp;|&nbsp;<a href="javascript:checkNone('a_id[]')"><?php echo Kohana::lang('analysis.select_none'); ?></a></div>
 					<div class="analysis-generated" id="analysis-generated">
-						<h4>CLICK "SEARCH" ON RIGHT TO FIND RELATED REPORTS</h4>
+						<h4><?php echo utf8::strtoupper(Kohana::lang('analysis.search_to_find_related')); ?></h4>
 					</div>
 					<div id="analysis-assess"></div>
 					<div id="analysis-report"></div>
@@ -43,14 +43,14 @@
 			<div class="analysis-filter">
 				<div class="tab">
 					<ul>
-						<li style="line-height: 24px;">SEARCH FOR RELATED ITEMS</li>
-						<li><a href="javascript:generateReports();" class="analysis-btn-search">SEARCH</a></li>
-						<li><a href="javascript:reset()" class="analysis-btn-reset">RESET</a></li>
+						<li style="line-height: 24px;"><?php echo utf8::strtoupper(Kohana::lang('analysis.search_for_related')); ?></li>
+						<li><a href="javascript:generateReports();" class="analysis-btn-search"><?php echo utf8::strtoupper(Kohana::lang('ui_main.search')); ?></a></li>
+						<li><a href="javascript:reset()" class="analysis-btn-reset"><?php echo utf8::strtoupper(Kohana::lang('ui_main.reset')); ?></a></li>
 					</ul>
 				</div>
 				<div class="analysis-filter-items">
 									
-					<h4>DISTANCE FILTER <span>Drag bottom right corner of map to resize</span></h4>
+					<h4><?php echo utf8::strtoupper(Kohana::lang('analysis.distance_filter')); ?> <span><?php echo Kohana::lang('analysis.drag_map_to_resize'); ?></span></h4>
 					<div class="analysis-filter-block">
 						<div class="analysis-map" id="analysis-map"></div>
 						<div class="analysis-slider">
@@ -65,24 +65,24 @@
 						</div>
 					</div>
 					
-					<h4>TIME FILTER</h4>
+					<h4><?php echo utf8::strtoupper(Kohana::lang('analysis.time_filter')); ?></h4>
 					<div class="analysis-filter-block">
 						<div class="analysis-date">
-							<strong>Start Date:</strong><br />
+							<strong><?php echo Kohana::lang('analysis.start_date'); ?>:</strong><br />
 							<?php print form::input('start_date', '', ' class="text"'); ?>
 						</div>
 						<div class="analysis-date">
-							<strong>End Date:</strong><br />
+							<strong><?php echo Kohana::lang('analysis.end_date'); ?>:</strong><br />
 							<?php print form::input('end_date', '', ' class="text"'); ?>
 						</div>
 						<div style="clear:both;"></div>
 						<?php print $date_picker_js; ?>
 					</div>
 					
-					<h4>CATEGORY FILTER</h4>
+					<h4><?php echo utf8::strtoupper(Kohana::lang('analysis.category_filter')); ?></h4>
 					<div class="analysis-filter-block">
 						<select id="analysis_category" name="analysis_category"  style="width:300px;">
-							<option value="0">ALL</option>
+							<option value="0"><?php echo utf8::strtoupper(Kohana::lang('ui_main.all')); ?></option>
 							<?php
 							foreach ($categories as $category => $category_info)
 							{
@@ -98,9 +98,9 @@
 				</div>
 				<div class="tab">
 					<ul>
-						<li style="line-height: 24px;">SEARCH FOR RELATED ITEMS</li>
-						<li><a href="javascript:generateReports();" class="analysis-btn-search">SEARCH</a></li>
-						<li><a href="javascript:reset()" class="analysis-btn-reset">RESET</a></li>
+						<li style="line-height: 24px;"><?php echo utf8::strtoupper(Kohana::lang('analysis.search_for_related')); ?></li>
+						<li><a href="javascript:generateReports();" class="analysis-btn-search"><?php echo utf8::strtoupper(Kohana::lang('ui_main.search')); ?></a></li>
+						<li><a href="javascript:reset()" class="analysis-btn-reset"><?php echo utf8::strtoupper(Kohana::lang('ui_main.reset')); ?></a></li>
 					</ul>
 				</div>
 			</div>

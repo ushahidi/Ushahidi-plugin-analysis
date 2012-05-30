@@ -1,7 +1,15 @@
 <?php
 	$lang = array(
 	'analysis' => 'Analysis',
+	'category_filter' => 'Category Filter',
+	'distance_filter' => 'Distance Filter',
+	'drag_map_to_resize' => 'Drag bottom right corner of map to resize',
+	'end_date' => 'End Date',
 	'information_evaluation' => 'Information Evaluation',
+	'how_analysis_works' => 'How Analysis Works',
+	'how_analysis_works_1' => 'This tool helps you find related reports in the system based on specified parameters.',
+	'how_analysis_works_2' => 'To the right, select the filters you\'d like to apply to the reports you\'re looking for.',
+	'how_analysis_works_3' => 'Select the reports you\'d like to analyse and click \'Perform Assessment\'',
 	'report_edit_dropdown_1_default' => '--- Select One ---',
 	'report_edit_dropdown_1_item_1' => 'Yes, the source has direct access to information (witness or actor).',
 	'report_edit_dropdown_1_item_2' => 'Yes, the source has access to information, but can be wrong.',
@@ -18,4 +26,10 @@
 	'report_edit_dropdown_2_item_5' => 'No, the information is unlikely and may be disinformation.',
 	'report_edit_dropdown_2_item_6' => 'I do not know.',
 	'report_edit_dropdown_2_title' => 'Information Probability',
+	'search_to_find_related' => 'Click "search" on right to find related reports',
+	'select_all' => 'Select ALL',
+	'select_none' => 'Select NONE',
+	'search_for_related' => 'Search for related items',
+	'start_date' => 'Start Date',
+	'time_filter' => 'Time Filter',
 );

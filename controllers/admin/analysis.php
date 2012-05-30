@@ -250,7 +250,7 @@ class Analysis_Controller extends Admin_Controller {
 		
 		if ($source_qual >= 1 AND $source_qual <= 6
 			AND $info_qual >= 1 AND $info_qual <= 6) {
-			return strtoupper($sourcequal_array[$source_qual].$info_qual);
+			return utf8::strtoupper($sourcequal_array[$source_qual].$info_qual);
 		}
 		else
 		{
