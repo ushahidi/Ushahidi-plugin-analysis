@@ -60,7 +60,6 @@ class analysis {
 		elseif (strripos(Router::$current_uri, "admin/reports/edit") !== false)
 		{
 			plugin::add_stylesheet('analysis/views/css/report');
-			plugin::add_javascript('analysis/views/js/jquery.copy.min');
 			Event::add('ushahidi_action.report_pre_form_admin', array($this, '_reports_list_analysis'));
 			Event::add('ushahidi_action.header_scripts_admin', array($this, '_save_analysis_js'));
 			Event::add('ushahidi_action.report_edit', array($this, '_save_analysis'));
